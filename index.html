@@ -3,14 +3,328 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <meta name="description" content="Eklavya Tyagi — personal website">
+  <meta name="description" content="Eklavya Tyagi — Computer Science, AI security, systems, and research.">
   <title>Eklavya Tyagi</title>
   <style>
-    html, body { height: 100%; }
-    body { margin: 0; background: #ffffff; }
+    :root {
+      --bg: #071421;
+      --bg2: #0b1b2d;
+      --card: rgba(12, 30, 47, 0.76);
+      --text: #f3f5f8;
+      --muted: #c6cbd2;
+      --soft: #9ca7b5;
+      --accent: #b58cff;
+      --accent2: #9b72ff;
+      --border: rgba(181, 140, 255, 0.75);
+      --line: rgba(255,255,255,0.08);
+      --max: 980px;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      min-height: 100%;
+      color: var(--text);
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background:
+        radial-gradient(circle at 18% 8%, rgba(79, 84, 122, 0.22), transparent 31%),
+        radial-gradient(circle at 88% 4%, rgba(55, 89, 115, 0.17), transparent 30%),
+        linear-gradient(180deg, #111827 0%, #0a1928 26%, #071421 100%);
+      background-attachment: fixed;
+      line-height: 1.7;
+    }
+
+    a { color: inherit; }
+    .wrap { width: min(calc(100% - 42px), var(--max)); margin: 0 auto; }
+
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .hero::before {
+      content: "";
+      position: absolute;
+      inset: 0;
+      pointer-events: none;
+      opacity: .55;
+      background:
+        linear-gradient(150deg, transparent 0 35%, rgba(65, 86, 111, .15) 36%, transparent 47%),
+        linear-gradient(20deg, transparent 0 57%, rgba(36, 66, 89, .15) 58%, transparent 70%);
+    }
+
+    .hero-inner { position: relative; z-index: 1; max-width: 760px; padding: 72px 0; }
+    h1 { margin: 0 0 16px; font-size: clamp(2.45rem, 6vw, 4.2rem); letter-spacing: -0.035em; line-height: 1.05; }
+    .lead { margin: 0 0 26px; max-width: 720px; color: var(--muted); font-size: clamp(1rem, 2.2vw, 1.18rem); }
+    .lead strong { color: var(--text); font-weight: 600; }
+
+    .actions { display: flex; flex-wrap: wrap; gap: 18px; margin-top: 30px; }
+    .pill {
+      min-width: 122px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 18px;
+      padding: 12px 22px;
+      border: 2px solid var(--border);
+      border-radius: 999px;
+      color: #c7a8ff;
+      text-decoration: none;
+      font-weight: 500;
+      transition: .2s ease;
+      background: rgba(30, 21, 56, .12);
+    }
+    .pill:hover { background: rgba(181,140,255,.12); transform: translateY(-2px); }
+    .arrow { font-size: 1.35rem; line-height: 1; }
+
+    .micro { margin-top: 20px; color: var(--soft); font-size: .9rem; }
+
+    section { padding: 88px 0; border-top: 1px solid var(--line); scroll-margin-top: 24px; }
+    .section-kicker { color: #c4a6ff; font-size: .83rem; font-weight: 700; letter-spacing: .13em; text-transform: uppercase; margin-bottom: 7px; }
+    h2 { margin: 0 0 28px; font-size: clamp(2rem, 4vw, 2.8rem); letter-spacing: -.025em; }
+    h3 { margin: 0; font-size: 1.08rem; }
+    .section-intro { max-width: 760px; color: var(--muted); margin: -12px 0 34px; }
+
+    .stack { display: grid; gap: 16px; }
+    .card {
+      border: 1px solid rgba(255,255,255,.1);
+      border-radius: 18px;
+      padding: 22px 24px;
+      background: linear-gradient(180deg, rgba(17,34,52,.86), rgba(10,27,43,.74));
+      box-shadow: 0 14px 45px rgba(0,0,0,.12);
+    }
+    .card-top { display: flex; justify-content: space-between; gap: 20px; align-items: baseline; }
+    .meta { color: var(--soft); font-size: .9rem; white-space: nowrap; }
+    .role { color: #d6c4ff; margin-top: 3px; font-size: .95rem; }
+    .card p { color: var(--muted); margin: 12px 0 0; }
+    .card ul { color: var(--muted); margin: 12px 0 0 19px; padding: 0; }
+    .card li + li { margin-top: 6px; }
+    .card a { color: #c7a8ff; text-decoration: none; }
+    .card a:hover { text-decoration: underline; }
+
+    .subhead { margin: 42px 0 16px; color: #eee9ff; font-size: 1.35rem; }
+    .grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+
+    .course-grid { display: grid; grid-template-columns: repeat(2, minmax(0,1fr)); gap: 16px; }
+    .course-group h3 { color: #e9ddff; margin-bottom: 10px; }
+    .tags { display: flex; flex-wrap: wrap; gap: 9px; }
+    .tag { border: 1px solid rgba(181,140,255,.34); background: rgba(181,140,255,.07); color: var(--muted); padding: 7px 10px; border-radius: 999px; font-size: .86rem; }
+
+    .contact-grid { display: grid; grid-template-columns: repeat(3, minmax(0,1fr)); gap: 14px; }
+    .contact-link { text-decoration: none; }
+    .contact-link .card { height: 100%; transition: .2s ease; }
+    .contact-link:hover .card { transform: translateY(-3px); border-color: rgba(181,140,255,.5); }
+
+    footer { padding: 36px 0 52px; color: var(--soft); font-size: .9rem; border-top: 1px solid var(--line); }
+
+    @media (max-width: 760px) {
+      .hero { min-height: auto; padding: 44px 0 26px; }
+      .hero-inner { padding: 70px 0; }
+      .grid, .course-grid, .contact-grid { grid-template-columns: 1fr; }
+      .card-top { flex-direction: column; gap: 2px; }
+      .meta { white-space: normal; }
+      .actions { gap: 12px; }
+      .pill { flex: 1 1 130px; }
+    }
   </style>
 </head>
 <body>
-  <!-- Placeholder personal website. Replace this file with your full portfolio when ready. -->
+  <main>
+    <section class="hero" id="top">
+      <div class="wrap">
+        <div class="hero-inner">
+          <h1>Eklavya Tyagi</h1>
+          <p class="lead">
+            Master's student in Computer Science at the <strong>University of Illinois Urbana-Champaign</strong>, with interests in AI security, agentic systems, machine learning, and systems research.<br>
+            Currently researching real-world AI-agent security and building products at the intersection of generative AI and search.
+          </p>
+          <div class="actions">
+            <a class="pill" href="#work">Work <span class="arrow">›</span></a>
+            <a class="pill" href="#courses">Courses <span class="arrow">›</span></a>
+            <a class="pill" href="#contact">Contact <span class="arrow">›</span></a>
+          </div>
+          <div class="micro">Computer Science · AI Security · Systems · Machine Learning</div>
+        </div>
+      </div>
+    </section>
+
+    <section id="work">
+      <div class="wrap">
+        <div class="section-kicker">Work</div>
+        <h2>Research & Experience</h2>
+        <p class="section-intro">A mix of AI security research, scientific AI systems, game/simulation engineering, and product building.</p>
+
+        <div class="stack">
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <h3>System Security Foundations Lab — University of Illinois Urbana-Champaign</h3>
+                <div class="role">Student Researcher · Prof. Luyi Xing</div>
+              </div>
+              <div class="meta">May 2026 – Present</div>
+            </div>
+            <p>Conducting AI security research on Agent Data Injection and trust-boundary failures in real-world agent systems. Contributed implementation work, vulnerability case studies, proof-of-concept development, attack analysis, and mitigations to the published Agent Data Injection research.</p>
+            <p><a href="https://arxiv.org/html/2607.05120v1" target="_blank" rel="noreferrer">Read the paper →</a></p>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <h3>NCSA</h3>
+                <div class="role">Data Science Research Intern</div>
+              </div>
+              <div class="meta">May 2023 – Sep 2024</div>
+            </div>
+            <p>Built Python-based LLM research pipelines for astronomy, combining GPT-4, LangChain, SQL, MongoDB, Astropy, and scientific tool execution. Developed evaluation workflows for complex astronomy questions and explored structured multi-step planning for scientific assistants.</p>
+          </article>
+
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <h3>Studio</h3>
+                <div class="role">Game Development Programmer</div>
+              </div>
+              <div class="meta">May 2024 – May 2025</div>
+            </div>
+            <p>Developed gameplay, simulation, VR interaction, and physics systems for Meta Quest in Unreal Engine using C++ and Blueprints, working with a multidisciplinary team on environments, locomotion, aerodynamic simulation, UI, and interactive mechanics.</p>
+          </article>
+        </div>
+
+        <h3 class="subhead">Projects</h3>
+        <div class="grid">
+          <article class="card">
+            <h3>Coren</h3>
+            <div class="role">Founder · Generative Search Visibility Platform</div>
+            <p>Building an AI-search visibility platform that measures how companies appear across ChatGPT, Claude, Gemini, Perplexity, and AI Overviews through query generation, citation tracking, source analysis, and visibility scoring.</p>
+            <p><a href="https://usecoren.com/" target="_blank" rel="noreferrer">usecoren.com →</a></p>
+          </article>
+
+          <article class="card">
+            <h3>AI-Driven Quantitative Trading Strategy</h3>
+            <div class="role">Multi-agent research prototype</div>
+            <p>Built a Python pipeline with LangChain, LangGraph, Pandas, yFinance, and Backtrader to generate, validate, backtest, repair, and evaluate trading strategies using risk-adjusted metrics.</p>
+          </article>
+
+          <article class="card">
+            <h3>Agentic Security / Skills Research</h3>
+            <div class="role">AI-agent security engineering</div>
+            <p>Explored tool and skill-layer attack surfaces in modern agents, including malicious skill triggering, description optimization, execution behavior, and security evaluation for Claude-style Skills and tool-using agents.</p>
+            <p><a href="https://github.com/Eklavya17/Chord_Skills" target="_blank" rel="noreferrer">GitHub →</a></p>
+          </article>
+
+          <article class="card">
+            <h3>Blind Access Reader</h3>
+            <div class="role">Accessibility + AI</div>
+            <p>Built a browser-based accessibility project that reads webpages aloud, summarizes structure, and describes visual content using AI-assisted page understanding.</p>
+            <p><a href="https://github.com/Eklavya17/AccessReader" target="_blank" rel="noreferrer">GitHub →</a></p>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="courses">
+      <div class="wrap">
+        <div class="section-kicker">Courses</div>
+        <h2>Education & Coursework</h2>
+
+        <div class="stack" style="margin-bottom:28px">
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <h3>University of Illinois Urbana-Champaign</h3>
+                <div class="role">Master of Computer Science</div>
+              </div>
+              <div class="meta">Aug 2026 – May 2028</div>
+            </div>
+          </article>
+          <article class="card">
+            <div class="card-top">
+              <div>
+                <h3>University of Illinois Urbana-Champaign</h3>
+                <div class="role">Bachelor of Science in Computer Science</div>
+              </div>
+              <div class="meta">Aug 2022 – May 2026</div>
+            </div>
+          </article>
+        </div>
+
+        <div class="course-grid">
+          <article class="card course-group">
+            <h3>AI & Machine Learning</h3>
+            <div class="tags">
+              <span class="tag">Machine Learning</span>
+              <span class="tag">Deep Learning</span>
+              <span class="tag">Artificial Intelligence</span>
+              <span class="tag">Natural Language Processing</span>
+              <span class="tag">Computer Vision</span>
+              <span class="tag">Statistical Modeling</span>
+            </div>
+          </article>
+
+          <article class="card course-group">
+            <h3>Systems & Security</h3>
+            <div class="tags">
+              <span class="tag">System Programming</span>
+              <span class="tag">Computer Architecture</span>
+              <span class="tag">Distributed Systems</span>
+              <span class="tag">Computer Security</span>
+              <span class="tag">Cloud Computing</span>
+              <span class="tag">Compilers</span>
+              <span class="tag">Database Systems</span>
+            </div>
+          </article>
+
+          <article class="card course-group">
+            <h3>Mathematics & Statistics</h3>
+            <div class="tags">
+              <span class="tag">Probability & Statistics</span>
+              <span class="tag">Linear Algebra</span>
+              <span class="tag">Abstract Linear Algebra</span>
+              <span class="tag">Numerical Analysis</span>
+              <span class="tag">Numerical Methods</span>
+              <span class="tag">Combinatorics</span>
+            </div>
+          </article>
+
+          <article class="card course-group">
+            <h3>Other Technical Work</h3>
+            <div class="tags">
+              <span class="tag">Data Structures & Algorithms</span>
+              <span class="tag">High Frequency Trading</span>
+              <span class="tag">Game Development</span>
+              <span class="tag">Astronomy Computing</span>
+            </div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section id="contact">
+      <div class="wrap">
+        <div class="section-kicker">Contact</div>
+        <h2>Get in touch</h2>
+        <p class="section-intro">For research, engineering, startup, or collaboration conversations.</p>
+        <div class="contact-grid">
+          <a class="contact-link" href="mailto:etyagi2@illinois.edu">
+            <div class="card"><h3>Email</h3><p>etyagi2@illinois.edu</p></div>
+          </a>
+          <a class="contact-link" href="https://www.linkedin.com/in/eklavya-tyagi-32b320278/" target="_blank" rel="noreferrer">
+            <div class="card"><h3>LinkedIn</h3><p>Connect with me →</p></div>
+          </a>
+          <a class="contact-link" href="https://github.com/Eklavya17/" target="_blank" rel="noreferrer">
+            <div class="card"><h3>GitHub</h3><p>@Eklavya17 →</p></div>
+          </a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    <div class="wrap">© 2026 Eklavya Tyagi</div>
+  </footer>
 </body>
 </html>
